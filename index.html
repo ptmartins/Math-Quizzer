@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+    <main class="main">
+        <div class="app">
+            <h1 class="app-title">Math Quizzer</h1>
+            <section class="section landing hidden">
+                <h2 class="section-title">Select category</h2>
+                <ul class="operations">
+                    <li class="btn btn--action operation" data-category="add">Add</li>
+                    <li class="btn btn--action operation" data-category="subtract">Subtract</li>
+                    <li class="btn btn--action operation" data-category="multiply">Multiply</li>
+                </ul>
+            </section>
+            <section class="section level hidden">
+                <h2 class="section-title">Select level</h2>
+                <ul class="levels">
+                    <li class="btn btn--action level level--easy" data-level="easy">Easy</li>
+                    <li class="btn btn--action level level--normal" data-level="normal">Normal</li>
+                    <li class="btn btn--action level level--hard" data-level="hard">Hard</li>
+                </ul>
+            </section>
+            <section class="section algorithm hidden">
+            </section>
+        </div>
+    </main>
+
+    <div id="modalWrapper" class="modalWrapper hidden">
+        <div id="modal" class="modal">
+            <div id="modalContent" class="modal-content">
+            </div> 
+            <button class="btn btn--modalClose far fa-times-circle"></button>
+        </div>
+    </div>
+
+    <!-- JS -->
+    <script src="js/main.js"></script>
+</body>
+</html>
