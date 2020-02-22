@@ -231,14 +231,12 @@
 		 getMyResult = function() {
             var inputs = document.getElementsByClassName('userInput');
             var value = [];
-            // debugger;
+
             for(var i = 0; i < inputs.length; i++) {
                 value.push(inputs[i].value);
             }
 
             myResult = parseInt(value.join(''));
-            
-            console.log("My result: " + myResult);
          },
          
 
@@ -246,7 +244,6 @@
          * Update score
          */
         updateScore = function() {
-            // debugger;
             var storageObj = JSON.parse(localStorage.getItem('mathQuizzer'));
             storageObj.score = score;
 
@@ -291,7 +288,7 @@
 		 * Calculate result
 		 */
         calcResult = function() {
-        // debugger;
+
             switch(category) {
                 case 'add':
                     result = generatedNumbers[0] + generatedNumbers[1];	 
@@ -304,8 +301,7 @@
                     break;
                 default: break;
             }
-            // debugger;
-            console.log("Result:" + result);
+
         },
 
 		 /**
@@ -332,7 +328,6 @@
                 operator = document.createElement('DIV'),
                 restartBtn = document.createElement('BUTTON'),
                 checkResultBtn = document.createElement('BUTTON'),
-                rows,
                 nums = [];
 
             operator.className = 'operator';
@@ -395,7 +390,6 @@
             if(category === 'add' || category === 'subtract') {
                 frag.appendChild(renderUserInputs());
             } else if(category === 'multiply') {
-                // debugger;
                 frag.appendChild(renderMultiplyInputs());
             }
         
