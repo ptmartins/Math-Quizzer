@@ -1,17 +1,18 @@
 (function(app) {
-	var score = 0,
-		 category = '',
-		 level = '',
-		 actionBtns = document.getElementsByClassName('btn--action'),
-		 sections = document.getElementsByClassName('section'),
-		 generatedNumbers = [],
-		 modalWrapper = document.getElementById('modalWrapper'),
-		 modalContent = document.getElementById('modalContent'),
-         modalCloseBtn = document.querySelector('.btn--modalClose'),
-         rows,
-         digits, 
-		 result = '',
-		 myResult = '',
+    var score = 0,
+        playerScore = document.getElementById('playerScore'),
+        category = '',
+        level = '',
+        actionBtns = document.getElementsByClassName('btn--action'),
+        sections = document.getElementsByClassName('section'),
+        generatedNumbers = [],
+        modalWrapper = document.getElementById('modalWrapper'),
+        modalContent = document.getElementById('modalContent'),
+        modalCloseBtn = document.querySelector('.btn--modalClose'),
+        rows,
+        digits, 
+        result = '',
+        myResult = '',
 
 
 		 /**
@@ -34,14 +35,16 @@
 		* Handle button functions
 		*/
 		 handleActionBtns = function() {
-			 if(this.classList.contains('operation')) {
-                 category = this.dataset.category;
+            var that = this;
+            if(that.classList.contains('newGame')) {
+                showSection('categories');
+            }   else if(that.classList.contains('operation')) {
+                 category = that.dataset.category;
 				 showSection('level');
-			 } else if(this.classList.contains('level')) {
-				 level = this.dataset.level;
+			 } else if(that.classList.contains('level')) {
+				 level = that.dataset.level;
                  setNumberOfDigits();
-				 sections[2].appendChild(buildAlgorithm());
-
+				 sections[3].appendChild(buildAlgorithm());
 				 showSection('algorithm');
 			 }
 		 },
@@ -118,7 +121,7 @@
 		 * Clear algorithm section
 		 */
 		 clearAlgorithm = function() {
-			 sections[2].innerHTML  = ''; 
+			 sections[3].innerHTML  = ''; 
 		 },
 
 
@@ -151,7 +154,7 @@
 
                 for(var j = 0; j <= digits; j++) {
                     var userInput = document.createElement('INPUT');
-                    userInput.className = 'userInput';
+                    userInput.className = 'userInput userInput--result';
                     userInput.setAttribute('maxlength', 1);
                     userInput.setAttribute('oninput', "this.value=this.value.replace(/[^0-9]/g,'')");
 
@@ -169,6 +172,7 @@
          renderDummyInput = function() {
             var dummyInput = document.createElement('INPUT');
             dummyInput.className = 'userInput userInput--dummy';
+            dummyInput.setAttribute('value', '0');
 
             return dummyInput;
          },
@@ -178,7 +182,6 @@
           * Render multiplication inputs
           */
          renderMultiplyInputs = function() {
-            debugger;   
             var lastRowDigits = 0;
             setNumberOfInputRows(); 
 
@@ -212,7 +215,7 @@
 
             for(var k = 0; k < (digits + rows + 1); k++) {
                 var userInput = document.createElement('INPUT');
-                userInput.className = 'userInput userInput--multiply';
+                userInput.className = 'userInput userInput--multiply userInput--result';
                 userInput.setAttribute('maxlength', 1);
                 userInput.setAttribute('oninput', "this.value=this.value.replace(/[^0-9]/g,'')");
                 multiplyResult.appendChild(userInput);
@@ -229,7 +232,7 @@
 		 * Get my result
 		 */
 		 getMyResult = function() {
-            var inputs = document.getElementsByClassName('userInput');
+            var inputs = document.getElementsByClassName('userInput--result');
             var value = [];
 
             for(var i = 0; i < inputs.length; i++) {
@@ -239,15 +242,23 @@
             myResult = parseInt(value.join(''));
          },
          
+         /**
+          * Get score stored in local storage
+          */
+         getStoredScore = function() {
+            var storageObj = JSON.parse(localStorage.getItem('mathQuizzer'));
+            playerScore.textContent = storageObj.score;
+         },
 
         /**
          * Update score
          */
         updateScore = function() {
             var storageObj = JSON.parse(localStorage.getItem('mathQuizzer'));
-            storageObj.score = score;
+            storageObj.score += score;
 
             localStorage.setItem('mathQuizzer', JSON.stringify(storageObj));
+            playerScore.textContent = storageObj.score;
         },
 
 		 /**
@@ -301,7 +312,6 @@
                     break;
                 default: break;
             }
-
         },
 
 		 /**
@@ -311,6 +321,7 @@
 			 clearAlgorithm();
 			 showSection('landing');
              generatedNumbers = [];
+             score = 0;
              rows = '';
              digits = '';
 			 result = '';
@@ -363,6 +374,7 @@
 
                     digit.className = 'digit';
                     digit.textContent = a;
+                    digit.setAttribute('title', a);
                     term.appendChild(digit);
                 });			
 
@@ -432,7 +444,8 @@
 		*/
 		 init = function() {
 			 showSection('landing');
-			 attachEventListeners();
+             attachEventListeners();
+             getStoredScore();
 			 
 			 window.addEventListener('load', initLocalStorage);
 		 };

@@ -14,7 +14,15 @@
     <main class="main">
         <div class="app">
             <h1 class="app-title">Math Quizzer</h1>
+            <!-- Section - Landing -->
             <section class="section landing hidden">
+                <div class="score">
+                    <h3 class="score-title">Your score: <span id="playerScore" class="playerScore"></span></h3>
+                </div>
+                <div class="btn btn--action newGame">New game</div>
+            </section>
+            <!-- Section - Categories -->
+            <section class="section categories hidden">
                 <h2 class="section-title">Select category</h2>
                 <ul class="operations">
                     <li class="btn btn--action operation" data-category="add">Add</li>
@@ -22,6 +30,7 @@
                     <li class="btn btn--action operation" data-category="multiply">Multiply</li>
                 </ul>
             </section>
+            <!-- Section - Levels -->
             <section class="section level hidden">
                 <h2 class="section-title">Select level</h2>
                 <ul class="levels">
